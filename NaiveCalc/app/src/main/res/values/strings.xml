@@ -2,7 +2,7 @@
     <!--  app meta  -->
     <string name="app_name">NaiveCalc</string>
     <!--  operation strings  -->
-    <string name="opMultiply">*</string>
+    <string name="opMultiply">×</string>
     <string name="opDivide">/</string>
     <string name="opSubtract">-</string>
     <string name="opAdd">+</string>
