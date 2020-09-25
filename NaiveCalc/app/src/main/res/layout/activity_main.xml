@@ -15,6 +15,7 @@
         android:textColor="#333333"
         android:textSize="40sp"
         android:textStyle="bold"
+        android:scrollbars = "vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         />
 
@@ -42,6 +43,7 @@
             android:textColor="#ececec"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -57,6 +59,7 @@
             android:textColor="#ececec"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -72,6 +75,7 @@
             android:textColor="#ececec"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -88,6 +92,7 @@
             android:textColor="#ececec"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
     </LinearLayout>
 
@@ -115,6 +120,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -129,6 +135,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -143,6 +150,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -159,6 +167,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
@@ -192,6 +201,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -206,6 +216,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -220,6 +231,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -236,6 +248,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
@@ -265,6 +278,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -280,6 +294,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -295,6 +310,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="addOpToResField"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -311,6 +327,7 @@
             android:textColor="#333333"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:onClick="showRes"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
