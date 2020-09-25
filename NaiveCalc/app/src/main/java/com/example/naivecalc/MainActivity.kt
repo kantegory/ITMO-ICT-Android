@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         // define numValues and opValues
         val numValues = "0123456789"
+        val natValues = "123456789"
         val zeroValue = "0"
         val opValues = "×/-+"
         val pointValue = "."
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         // logic is there
         // check if field is not empty for adding only numbers or point
         if (resultField.text.isEmpty()) {
-             if (btnVal in numValues || btnVal in zeroValue) {
+             if (btnVal in numValues) {
                  resString += btnVal.toString()
              }
         }
@@ -49,8 +50,8 @@ class MainActivity : AppCompatActivity() {
             resString += btnVal.toString()
         }
         // if last char is zero, we can't add a new one zero
-        else if (resultField.text.takeLast(1) in zeroValue && (btnVal.toString() in numValues)
-            || (btnVal.toString() in opValues) || (btnVal.toString() in pointValue)) {
+        else if (resultField.text.takeLast(1) in zeroValue && ((btnVal.toString() in natValues)
+            || (btnVal.toString() in opValues) || (btnVal.toString() in pointValue))) {
             resString += btnVal.toString()
         }
         // we need be in range of type double, number length shouldn't be bigger that 15 digits
