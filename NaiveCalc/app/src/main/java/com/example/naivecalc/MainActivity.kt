@@ -39,23 +39,26 @@ class MainActivity : AppCompatActivity() {
              if (btnVal in numValues) {
                  resString += btnVal.toString()
              }
-        }
-        // if last char is not operation, we can add new char
-        else if (resultField.text.takeLast(1) in numValues ||
-            ((resultField.text.takeLast(1) in pointValue) && (btnVal.toString() in numValues))) {
-            resString += btnVal.toString()
-        }
-        // if last char is an operation, we can add only num
-        else if (resultField.text.takeLast(1) in opValues && btnVal.toString() in numValues) {
-            resString += btnVal.toString()
-        }
-        // if last char is zero, we can't add a new one zero
-        else if (resultField.text.takeLast(1) in zeroValue && ((btnVal.toString() in natValues)
-            || (btnVal.toString() in opValues) || (btnVal.toString() in pointValue))) {
-            resString += btnVal.toString()
-        }
-        // we need be in range of type double, number length shouldn't be bigger that 15 digits
+        } else {
+            // if last char is not operation, we can add new char
+            if (resultField.text.takeLast(1) in numValues ||
+                ((resultField.text.takeLast(1) in pointValue) && (btnVal.toString() in numValues))
+            ) {
+                resString += btnVal.toString()
+            }
 
+            // if last char is an operation, we can add only num
+            else if (resultField.text.takeLast(1) in opValues && btnVal.toString() in numValues) {
+                resString += btnVal.toString()
+            }
+
+            // if last char is zero, we can't add a new one zero
+            else if (resultField.text.takeLast(1) in zeroValue && ((btnVal.toString() in natValues)
+                        || (btnVal.toString() in opValues) || (btnVal.toString() in pointValue))
+            ) {
+                resString += btnVal.toString()
+            }
+        }
         // update result field
         resultField.text = resString
     }
@@ -70,6 +73,11 @@ class MainActivity : AppCompatActivity() {
         // define numValues and opValues
         val numValues = ".0123456789"
         val opValues = "×/-+"
+
+        // if last char is operation we shouldn't calc
+        if (resultField.text.takeLast(1) in opValues) {
+            return
+        }
 
         resultField.text.forEach {
             run {
@@ -105,9 +113,6 @@ class MainActivity : AppCompatActivity() {
      private fun calc(numArray: MutableList<Double>, opArray: MutableList<String>): String {
          var result = 0.0
          var tempNum = 0.0
-
-         println(numArray)
-         println(opArray)
 
          numArray.forEachIndexed { Index, Num ->
              run {
