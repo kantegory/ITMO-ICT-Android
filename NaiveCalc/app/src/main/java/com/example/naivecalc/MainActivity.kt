@@ -22,13 +22,15 @@ class MainActivity : AppCompatActivity() {
     fun addOpToResField(view: View) {
         // get result field
         val resultField = findViewById<TextView>(R.id.result)
+
         val btnVal = findViewById<Button>(view.id).text
         var resString = resultField.text.toString()
 
         // define numValues and opValues
-        val numValues = "123456789"
+        val numValues = "0123456789"
         val zeroValue = "0"
-        val opValues = ".×/-+"
+        val opValues = "×/-+"
+        val pointValue = "."
 
         // logic is there
         // check if field is not empty for adding only numbers or point
@@ -38,7 +40,8 @@ class MainActivity : AppCompatActivity() {
              }
         }
         // if last char is not operation, we can add new char
-        else if (resultField.text.takeLast(1) in numValues) {
+        else if (resultField.text.takeLast(1) in numValues ||
+            ((resultField.text.takeLast(1) in pointValue) && (btnVal.toString() in numValues))) {
             resString += btnVal.toString()
         }
         // if last char is an operation, we can add only num
@@ -46,13 +49,92 @@ class MainActivity : AppCompatActivity() {
             resString += btnVal.toString()
         }
         // if last char is zero, we can't add a new one zero
-        else if (resultField.text.takeLast(1) in zeroValue && btnVal.toString() in numValues) {
+        else if (resultField.text.takeLast(1) in zeroValue && (btnVal.toString() in numValues)
+            || (btnVal.toString() in opValues) || (btnVal.toString() in pointValue)) {
             resString += btnVal.toString()
         }
+        // we need be in range of type double, number length shouldn't be bigger that 15 digits
 
         // update result field
         resultField.text = resString
     }
 
-    fun showRes(view: View) {}
+    fun showRes(view: View) {
+        // get result field
+        val resultField = findViewById<TextView>(R.id.result)
+        var tempString = ""
+        val numArray: MutableList<Double> = ArrayList()
+        val opArray: MutableList<String> = ArrayList()
+
+        // define numValues and opValues
+        val numValues = ".0123456789"
+        val opValues = "×/-+"
+
+        resultField.text.forEach {
+            run {
+                // if it's number we should save it to tempString
+                if (it in numValues) {
+                    tempString += it
+                }
+                else if (it in opValues) {
+                    // add curr tempString double number to numArray
+                    numArray.add(tempString.toDouble())
+
+                    // clear tempString
+                    tempString = ""
+
+                    // add opValue to opArray
+                    opArray.add(it.toString())
+                }
+            }
+        }
+
+        // get the last number from resultField
+        var lastNum = resultField.text.split("+").takeLast(1)[0]
+        lastNum = lastNum.split("-").takeLast(1)[0]
+        lastNum = lastNum.split("/").takeLast(1)[0]
+        lastNum = lastNum.split("×").takeLast(1)[0]
+
+        numArray.add(lastNum.toDouble())
+
+        // update result field
+        resultField.text = calc(numArray, opArray)
+    }
+
+     private fun calc(numArray: MutableList<Double>, opArray: MutableList<String>): String {
+         var result = 0.0
+         var tempNum = 0.0
+
+         println(numArray)
+         println(opArray)
+
+         numArray.forEachIndexed { Index, Num ->
+             run {
+                 if (Index < 1) {
+                     result = Num
+                 } else {
+                     when {
+                         opArray[Index - 1] == "+" -> {
+                             tempNum = Num
+                             result += tempNum
+                         }
+                         opArray[Index - 1] == "-" -> {
+                             tempNum = Num
+                             result -= tempNum
+                         }
+                         opArray[Index - 1] == "×" -> {
+                             tempNum = Num
+                             result *= tempNum
+                         }
+                         opArray[Index - 1] == "/" -> {
+                             tempNum = Num
+                             result /= tempNum
+                         }
+                     }
+                 }
+             }
+         }
+
+         return result.toString()
+     }
 }
