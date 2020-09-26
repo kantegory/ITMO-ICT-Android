@@ -16,6 +16,7 @@
         android:textSize="40sp"
         android:textStyle="bold"
         android:scrollbars = "vertical"
+        android:onClick="copyResToClipboard"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         />
 

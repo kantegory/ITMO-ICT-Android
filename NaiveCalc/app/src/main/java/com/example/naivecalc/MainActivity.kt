@@ -1,11 +1,16 @@
 package com.example.naivecalc
 
+import android.R.attr.label
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -143,4 +148,19 @@ class MainActivity : AppCompatActivity() {
 
          return result.toString()
      }
+
+    fun copyResToClipboard(view: View) {
+        // init clipboard manager
+        val clipboard =
+            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+        // get clip data
+        val clip = ClipData.newPlainText(label.toString(), findViewById<TextView>(view.id).text.toString())
+
+        // put it to clipboard
+        clipboard.setPrimaryClip(clip);
+
+        // show toast
+        Toast.makeText(applicationContext,"Результат успешно скопирован!", Toast.LENGTH_SHORT).show()
+    }
 }
