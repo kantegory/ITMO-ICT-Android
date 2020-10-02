@@ -4,5 +4,6 @@
 
 ## Лабораторные
 
-- [Калькулятор](https://github.com/kantegory/ITMO-ICT-Android/NaiveCalc)
+- [Калькулятор](https://github.com/kantegory/ITMO-ICT-Android/blob/master/NaiveCalc)
+- [Приложение для погоды](https://github.com/kantegory/ITMO-ICT-Android/blob/master/WeatherApp)
 
