@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="380dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:contentDescription="rain"
+            app:srcCompat="@drawable/rain" />
+
+        <TextView
+            android:layout_width="380dp"
+            android:layout_height="40dp"
+            android:layout_margin="1dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.8"
+            android:background="#fff"
+            android:gravity="bottom"
+            android:paddingBottom="5dp"
+            android:text="15 ℃"
+            android:textAlignment="center"
+            android:textColor="@color/dark"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:layout_width="380dp"
+            android:layout_height="40dp"
+            android:layout_margin="1dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="0.8"
+            android:background="#fff"
+            android:gravity="bottom"
+            android:paddingBottom="5dp"
+            android:text="Приозерск, Россия"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="RtlCompat" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/wind" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/wind" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/wind" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="380dp"
+        android:layout_height="40dp"
+        android:layout_margin="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.8"
+        android:background="#fff"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:text="Погода на сегодня:"
+        android:textAlignment="center"
+        android:textColor="@color/dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+        tools:ignore="RtlCompat" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="380dp"
+        android:layout_height="40dp"
+        android:layout_margin="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="0.8"
+        android:background="#fff"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:text="Погода на неделю:"
+        android:textAlignment="center"
+        android:textColor="@color/dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        tools:ignore="RtlCompat" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/cloud" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/snow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/cloudy" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/rainbow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/rainbow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/rainbow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/rainbow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/rainbow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:contentDescription="rain"
+                app:srcCompat="@drawable/rainbow" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_margin="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#fff"
+                android:gravity="bottom"
+                android:paddingBottom="5dp"
+                android:text="Ветер"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
