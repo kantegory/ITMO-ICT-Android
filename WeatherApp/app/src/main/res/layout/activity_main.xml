@@ -11,13 +11,10 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#fff"
+        android:background="#f7f7f7"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="5dp"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +25,7 @@
             android:layout_height="100dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
-            android:background="#fff"
+            android:background="#f7f7f7"
             android:contentDescription="rain"
             app:srcCompat="@drawable/rain" />
 
@@ -39,7 +36,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.8"
-            android:background="#fff"
+            android:background="#f7f7f7"
             android:gravity="bottom"
             android:paddingBottom="5dp"
             android:text="15 ℃"
@@ -56,7 +53,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_weight="0.8"
-            android:background="#fff"
+            android:background="#f7f7f7"
             android:gravity="bottom"
             android:paddingBottom="5dp"
             android:text="Приозерск, Россия"
@@ -210,8 +207,9 @@
         android:layout_margin="1dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:layout_weight="0.8"
-        android:background="#fff"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:gravity="center"
         android:paddingBottom="5dp"
         android:text="Погода на неделю:"
@@ -286,7 +284,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="#fff"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/snow" />
+                app:srcCompat="@drawable/cloud" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -319,7 +317,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="#fff"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/cloudy" />
+                app:srcCompat="@drawable/cloud" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -352,7 +350,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="#fff"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/rainbow" />
+                app:srcCompat="@drawable/cloud" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -377,11 +375,10 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
+        android:background="#f7f7f7"
         android:gravity="center"
         android:orientation="horizontal"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -398,9 +395,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/rainbow" />
+                app:srcCompat="@drawable/cloudy" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -408,7 +405,7 @@
                 android:layout_margin="1dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:gravity="bottom"
                 android:paddingBottom="5dp"
                 android:text="Ветер"
@@ -431,9 +428,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/rainbow" />
+                app:srcCompat="@drawable/cloudy" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -441,7 +438,7 @@
                 android:layout_margin="1dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:gravity="bottom"
                 android:paddingBottom="5dp"
                 android:text="Ветер"
@@ -464,9 +461,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/rainbow" />
+                app:srcCompat="@drawable/cloudy" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -474,7 +471,7 @@
                 android:layout_margin="1dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:gravity="bottom"
                 android:paddingBottom="5dp"
                 android:text="Ветер"
@@ -497,9 +494,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/rainbow" />
+                app:srcCompat="@drawable/cloudy" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -507,7 +504,7 @@
                 android:layout_margin="1dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:gravity="bottom"
                 android:paddingBottom="5dp"
                 android:text="Ветер"
@@ -530,9 +527,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:contentDescription="rain"
-                app:srcCompat="@drawable/rainbow" />
+                app:srcCompat="@drawable/cloudy" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -540,7 +537,7 @@
                 android:layout_margin="1dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:background="#fff"
+                android:background="#f7f7f7"
                 android:gravity="bottom"
                 android:paddingBottom="5dp"
                 android:text="Ветер"
