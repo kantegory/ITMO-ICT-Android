@@ -12,7 +12,7 @@ class ContactsAdapter(private val contactsNumber: Int) : RecyclerView.Adapter<Co
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contactName : TextView = itemView.findViewById(R.id.contactName)
-        val contactHolder : TextView = itemView.findViewById(R.id.contactHolder)
+        val phoneNumber : TextView = itemView.findViewById(R.id.contactPhone)
 
         fun bind(index: Number) {
             contactName.text = index.toString()
@@ -30,7 +30,8 @@ class ContactsAdapter(private val contactsNumber: Int) : RecyclerView.Adapter<Co
 
         val viewHolder = ContactViewHolder(view)
 
-        viewHolder.contactHolder.text = "Index: $contactHolderNumber"
+        viewHolder.phoneNumber.text = "+79992214590"
+
         contactHolderNumber++
 
         return viewHolder
