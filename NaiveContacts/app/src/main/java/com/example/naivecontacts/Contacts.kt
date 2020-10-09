@@ -1,5 +1,3 @@
-package com.example.naivecontacts
-
 import android.content.Context
 import android.provider.ContactsContract
 

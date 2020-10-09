@@ -1,9 +1,11 @@
 package com.example.naivecontacts
 
+import Contact
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import fetchAllContacts
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,7 +14,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val contactsList: RecyclerView = findViewById(R.id.recyclerViewContacts)
-        val contactsAdapter: ContactsAdapter = ContactsAdapter(100)
+        val fetchedContacts : List<Contact> = fetchAllContacts()
+        val contactsAdapter: ContactsAdapter = ContactsAdapter(fetchedContacts.size, fetchedContacts)
 
         val layoutManager = LinearLayoutManager(this)
         contactsList.layoutManager = layoutManager

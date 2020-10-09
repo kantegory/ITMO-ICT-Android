@@ -1,5 +1,6 @@
 package com.example.naivecontacts
 
+import Contact
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,15 +8,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 
-class ContactsAdapter(private val contactsNumber: Int) : RecyclerView.Adapter<ContactsAdapter.ContactViewHolder>() {
+class ContactsAdapter(private val contactsNumber: Int, private val contactsList : List<Contact>) : RecyclerView.Adapter<ContactsAdapter.ContactViewHolder>() {
     private var contactHolderNumber : Int = 0
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contactName : TextView = itemView.findViewById(R.id.contactName)
-        val phoneNumber : TextView = itemView.findViewById(R.id.contactPhone)
+        private val phoneNumber : TextView = itemView.findViewById(R.id.contactPhone)
 
-        fun bind(index: Number) {
-            contactName.text = index.toString()
+        fun bind(index: Int, list: List<Contact>) {
+            contactName.text = list[index].name
+            phoneNumber.text = list[index].phoneNumber
         }
     }
 
@@ -30,8 +32,6 @@ class ContactsAdapter(private val contactsNumber: Int) : RecyclerView.Adapter<Co
 
         val viewHolder = ContactViewHolder(view)
 
-        viewHolder.phoneNumber.text = "+79992214590"
-
         contactHolderNumber++
 
         return viewHolder
@@ -42,6 +42,6 @@ class ContactsAdapter(private val contactsNumber: Int) : RecyclerView.Adapter<Co
     }
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(position, contactsList)
     }
 }
