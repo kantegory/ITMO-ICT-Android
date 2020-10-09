@@ -2,8 +2,11 @@ package com.example.naivecontacts
 
 import Contact
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -11,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fetchAllContacts
+import kotlinx.android.synthetic.main.contact_item.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,5 +71,11 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
+    }
+
+    fun makeCall(view: View) {
+        val phoneNumber : Uri = Uri.parse("tel:" + view.contactPhone.text.toString())
+        val callIntent : Intent = Intent(Intent.ACTION_DIAL, phoneNumber)
+        startActivity(callIntent)
     }
 }
