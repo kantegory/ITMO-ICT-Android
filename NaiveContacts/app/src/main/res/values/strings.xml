@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NaiveContacts</string>
+    <string name="contactimage">ContactImage</string>
 </resources>

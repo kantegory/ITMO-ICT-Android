@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,6 +11,16 @@
         android:onClick="makeCall"
         android:background="@color/colorPrimaryDark">
 
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/contactimage"
+            app:srcCompat="@drawable/beglov_aleksandr_dmitrievich" />
+
         <TextView
             android:id="@+id/contactName"
             style="@style/TextAppearance.AppCompat.Subhead"
@@ -18,7 +29,7 @@
             android:layout_gravity="center_vertical|start"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="65dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
 
