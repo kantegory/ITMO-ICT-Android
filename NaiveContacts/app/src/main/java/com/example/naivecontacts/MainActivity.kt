@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
                     val layoutManager = LinearLayoutManager(this)
                     contactsList.layoutManager = layoutManager
                     contactsList.adapter = contactsAdapter
+
+                    Toast.makeText(applicationContext,"Найдено " + fetchedContacts.size + " контактов", Toast.LENGTH_SHORT).show()
                 } else {
                     // permission denied
                     Toast.makeText(applicationContext,"К сожалению, Вы не дали доступа к контактам", Toast.LENGTH_SHORT).show()
