@@ -12,6 +12,7 @@
         android:background="@color/colorPrimaryDark">
 
         <ImageView
+            android:id="@+id/contactImage"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_gravity="center_vertical|start"
@@ -19,7 +20,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/contactimage"
-            app:srcCompat="@drawable/beglov_aleksandr_dmitrievich" />
+            app:srcCompat="@drawable/beglov0" />
 
         <TextView
             android:id="@+id/contactName"
