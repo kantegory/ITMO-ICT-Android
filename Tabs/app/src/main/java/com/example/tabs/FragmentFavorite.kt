@@ -7,8 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 class FragmentFavorite : Fragment() {
+    companion object {
+
+        fun newInstance(): FragmentFavorite {
+            return FragmentFavorite()
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        inflater.inflate(R.layout.fragment_favorite, container, false)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreate(savedInstanceState)
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 }
