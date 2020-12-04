@@ -15,23 +15,22 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, FragmentHome.newInstance())
+            .replace(R.id.fragment_container, FragmentHome())
             .commit()
 
         bottomNav.setOnNavigationItemSelectedListener {
-
             val selectedFragment : Fragment = when (it.itemId) {
                 R.id.nav_home -> {
-                    FragmentHome.newInstance()
+                    FragmentHome()
                 }
                 R.id.nav_favorite -> {
-                    FragmentFavorite.newInstance()
+                    FragmentFavorite()
                 }
                 R.id.nav_stat -> {
-                    FragmentStats.newInstance()
+                    FragmentStats()
                 }
                 else -> {
-                    FragmentHome.newInstance()
+                    FragmentHome()
                 }
             }
 
