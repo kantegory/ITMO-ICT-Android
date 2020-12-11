@@ -17,8 +17,67 @@
         android:textStyle="bold"
         android:scrollbars = "vertical"
         android:onClick="copyResToClipboard"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         />
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DDDDDD"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/opClear"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="1dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_weight="0.5"
+            android:background="#CC2E71F8"
+            android:text="@string/opClear"
+            android:textAlignment="center"
+            android:textColor="#ececec"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:onClick="clearResField"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/opLeftBracket"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="0.25"
+            android:layout_margin="1dp"
+            android:layout_marginTop="0dp"
+            android:background="#CC2E71F8"
+            android:text="@string/opLeftBracket"
+            android:textAlignment="center"
+            android:textColor="#ececec"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:onClick="addOpToResField"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/opRightBracket"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="0.25"
+            android:layout_margin="1dp"
+            android:layout_marginTop="0dp"
+            android:background="#CC2E71F8"
+            android:text="@string/opRightBracket"
+            android:textAlignment="center"
+            android:textColor="#ececec"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:onClick="addOpToResField"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout4"

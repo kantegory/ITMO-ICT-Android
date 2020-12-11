@@ -8,6 +8,9 @@
     <string name="opAdd">+</string>
     <string name="opEquate">=</string>
     <string name="opPoint">.</string>
+    <string name="opClear">C</string>
+    <string name="opLeftBracket">(</string>
+    <string name="opRightBracket">)</string>
     <!--  num strings  -->
     <string name="num0">0</string>
     <string name="num1">1</string>

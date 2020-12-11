@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.result).text = savedInstanceState.getString("result")
     }
 
-    @SuppressLint("SetTextI18n")
     fun addOpToResField(view: View) {
         // get result field
         val resultField = findViewById<TextView>(R.id.result)
@@ -50,31 +49,54 @@ class MainActivity : AppCompatActivity() {
         val natValues = "123456789"
         val zeroValue = "0"
         val opValues = "×/-+"
+        val bracketValues = "()"
         val pointValue = "."
 
         // logic is there
-        // check if field is not empty for adding only numbers or point
+        // check if field is not empty for adding only numbers or point or left bracket
         if (resultField.text.isEmpty()) {
-             if (btnVal in numValues) {
+             if (btnVal in numValues || btnVal in "(") {
                  resString += btnVal.toString()
              }
         } else {
             // if last char is not operation, we can add new char
             if (resultField.text.takeLast(1) in numValues ||
-                ((resultField.text.takeLast(1) in pointValue) && (btnVal.toString() in numValues))
+                ((resultField.text.takeLast(1) in pointValue) &&
+                        (btnVal in numValues)) &&
+                (btnVal !in "(")
             ) {
                 resString += btnVal.toString()
             }
 
-            // if last char is an operation, we can add only num
-            else if (resultField.text.takeLast(1) in opValues && btnVal.toString() in numValues) {
+            // if last char is an operation, we can add only num or left bracket
+            else if (resultField.text.takeLast(1) in opValues &&
+                (btnVal in numValues || btnVal in "(")) {
                 resString += btnVal.toString()
             }
 
             // if last char is zero, we can't add a new one zero
-            else if (resultField.text.takeLast(1) in zeroValue && ((btnVal.toString() in natValues)
-                        || (btnVal.toString() in opValues) || (btnVal.toString() in pointValue))
+            else if (resultField.text.takeLast(1) in zeroValue && ((btnVal in natValues)
+                        || (btnVal in opValues) || (btnVal in pointValue))
             ) {
+                resString += btnVal.toString()
+            }
+
+            // if last char is left bracket, we can add only num
+            else if (resultField.text.takeLast(1) in "(" && btnVal in numValues) {
+                resString += btnVal.toString()
+            }
+
+            // if last char is right bracket, we can add only operation
+            else if (resultField.text.takeLast(1) in ")" && btnVal in opValues) {
+                resString += btnVal.toString()
+            }
+
+            // if we have an even number of left brackets, we can add right bracket
+            else if (btnVal in ")" &&
+                (countBrackets(resultField.text.toString(), "(") % 2 != 0 &&
+                    countBrackets(resultField.text.toString(), ")") + 1 <
+                    countBrackets(resultField.text.toString(), "(")
+                ) && resultField.text.takeLast(1) !in "(") {
                 resString += btnVal.toString()
             }
         }
@@ -162,6 +184,15 @@ class MainActivity : AppCompatActivity() {
 
          return result.toString()
      }
+
+    fun clearResField(view: View) {
+        // get result field, then clear
+        findViewById<TextView>(R.id.result).text = ""
+    }
+
+    private fun countBrackets(s: String, ch: String) : Int {
+        return s.filter { it in ch }.count()
+    }
 
     fun copyResToClipboard(view: View) {
         // init clipboard manager
