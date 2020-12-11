@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.contact_item.view.*
 class MainActivity : AppCompatActivity() {
 
     private var REQUEST_CODE_PERMISSION_READ_CONTACTS : Int = 1
+    private var REQUEST_CODE_PERMISSION_SEND_SMS : Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.READ_CONTACTS),
-                REQUEST_CODE_PERMISSION_READ_CONTACTS
-            )
+                    REQUEST_CODE_PERMISSION_READ_CONTACTS
+                )
         }
     }
 
@@ -63,10 +64,12 @@ class MainActivity : AppCompatActivity() {
                     contactsList.layoutManager = layoutManager
                     contactsList.adapter = contactsAdapter
 
-                    Toast.makeText(applicationContext,"Найдено " + fetchedContacts.size + " контактов", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext,"Найдено " + fetchedContacts.size
+                            + " контактов", Toast.LENGTH_SHORT).show()
                 } else {
                     // permission denied
-                    Toast.makeText(applicationContext,"К сожалению, Вы не дали доступа к контактам", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext,"К сожалению, Вы не дали доступа " +
+                            "к контактам", Toast.LENGTH_SHORT).show()
                 }
                 return
             }
@@ -75,7 +78,14 @@ class MainActivity : AppCompatActivity() {
 
     fun makeCall(view: View) {
         val phoneNumber : Uri = Uri.parse("tel:" + view.contactPhone.text.toString())
-        val callIntent : Intent = Intent(Intent.ACTION_DIAL, phoneNumber)
+        val callIntent = Intent(Intent.ACTION_DIAL, phoneNumber)
         startActivity(callIntent)
+    }
+
+    fun makeMessage(view: View) {
+        val to : Uri = Uri.parse("smsto:" + view.sendMsgTo.text.toString())
+        val smsIntent = Intent(Intent.ACTION_SENDTO, to)
+        smsIntent.putExtra("sms_body", "Hello, world!")
+        startActivity(smsIntent)
     }
 }

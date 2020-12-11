@@ -16,6 +16,7 @@ class ContactsAdapter(private val contactsNumber: Int, private val contactsList 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contactName : TextView = itemView.findViewById(R.id.contactName)
         private val phoneNumber : TextView = itemView.findViewById(R.id.contactPhone)
+        private val sendMsgTo : TextView = itemView.findViewById(R.id.sendMsgTo)
         private val contactImg : ImageView = itemView.findViewById(R.id.contactImage)
         private val imgsList : Array<Int> = arrayOf<Int>(R.drawable.beglov0, R.drawable.beglov1,
             R.drawable.beglov2, R.drawable.beglov3, R.drawable.beglov4)
@@ -25,6 +26,7 @@ class ContactsAdapter(private val contactsNumber: Int, private val contactsList 
             contactImg.setImageResource(imgsList[rndImgIndex])
             contactName.text = list[index].name
             phoneNumber.text = list[index].phoneNumber
+            sendMsgTo.text = list[index].phoneNumber
         }
     }
 
