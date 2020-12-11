@@ -6,14 +6,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import fetchAllContacts
@@ -36,7 +33,6 @@ class MainActivity : AppCompatActivity() {
             val fetchedContacts : List<Contact> = fetchAllContacts()
             val contactsAdapter: ContactsAdapter = ContactsAdapter(fetchedContacts.size, fetchedContacts)
 
-//            val layoutManager = LinearLayoutManager(this)
             val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             contactsList.layoutManager = layoutManager
             contactsList.adapter = contactsAdapter
@@ -66,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                     val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
                     contactsList.layoutManager = layoutManager
+                    layoutManager.setMeasuredDimension(10, 120)
                     contactsList.adapter = contactsAdapter
 
                     Toast.makeText(applicationContext,"Найдено " + fetchedContacts.size
