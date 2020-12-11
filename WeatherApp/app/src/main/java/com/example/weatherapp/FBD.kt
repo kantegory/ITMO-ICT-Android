@@ -1,4 +1,3 @@
 package com.example.weatherapp
 
-class FBD {
-}
+data class FBD(val day: String, val temp: String, val img: Int)
