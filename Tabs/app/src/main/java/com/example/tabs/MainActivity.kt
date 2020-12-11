@@ -2,7 +2,6 @@ package com.example.tabs
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -56,6 +55,15 @@ class MainActivity : AppCompatActivity() {
                 .commit()
 
             true
+        }
+    }
+
+    // отслеживаем нажатие кнопки назад, чтобы чистить backStack
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount <= 1) {
+            super.onBackPressed()
+        } else {
+            supportFragmentManager.popBackStack()
         }
     }
 }
