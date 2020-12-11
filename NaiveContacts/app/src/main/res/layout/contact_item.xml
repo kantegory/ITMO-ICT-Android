@@ -37,7 +37,7 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimaryDark"
             android:text="Александр Плотников"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/contactPhone"
@@ -48,7 +48,7 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="10dp"
             android:text="+79999999999"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </FrameLayout>
 

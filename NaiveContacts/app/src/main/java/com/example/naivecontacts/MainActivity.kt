@@ -6,13 +6,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import fetchAllContacts
 import kotlinx.android.synthetic.main.contact_item.view.*
 
@@ -20,7 +23,6 @@ import kotlinx.android.synthetic.main.contact_item.view.*
 class MainActivity : AppCompatActivity() {
 
     private var REQUEST_CODE_PERMISSION_READ_CONTACTS : Int = 1
-    private var REQUEST_CODE_PERMISSION_SEND_SMS : Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,8 @@ class MainActivity : AppCompatActivity() {
             val fetchedContacts : List<Contact> = fetchAllContacts()
             val contactsAdapter: ContactsAdapter = ContactsAdapter(fetchedContacts.size, fetchedContacts)
 
-            val layoutManager = LinearLayoutManager(this)
+//            val layoutManager = LinearLayoutManager(this)
+            val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             contactsList.layoutManager = layoutManager
             contactsList.adapter = contactsAdapter
         } else {
@@ -60,7 +63,8 @@ class MainActivity : AppCompatActivity() {
                     val fetchedContacts : List<Contact> = fetchAllContacts()
                     val contactsAdapter: ContactsAdapter = ContactsAdapter(fetchedContacts.size, fetchedContacts)
 
-                    val layoutManager = LinearLayoutManager(this)
+                    val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
                     contactsList.layoutManager = layoutManager
                     contactsList.adapter = contactsAdapter
 
