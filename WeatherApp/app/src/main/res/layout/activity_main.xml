@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
+        app:cardCornerRadius="7dp"
+        android:layout_margin="10dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -51,12 +53,53 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/forecastNowHum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="7dp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/forecastNow">
+        <TextView
+            android:id="@+id/forecastNowHumValue"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="5dp"
+            android:text="47"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/forecastNowHumImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/forecastImgDesc"
+            app:srcCompat="@drawable/humidity" />
+
+        <TextView
+            android:id="@+id/forecastNowHumTitle"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginTop="80dp"
+            android:text="Влажность"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+
+    </androidx.cardview.widget.CardView>
+
     <FrameLayout
         android:id="@+id/forecastToday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastNow"
-
+        app:layout_constraintTop_toBottomOf="@id/forecastNowHum"
+        android:layout_margin="5dp"
         >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFBT"
@@ -68,8 +111,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="150dp"
         android:id="@+id/forecastWeek"
+        android:layout_margin="5dp"
         app:layout_constraintTop_toBottomOf="@+id/forecastToday">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFBD"
