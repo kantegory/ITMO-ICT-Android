@@ -60,10 +60,9 @@ class MainActivity : AppCompatActivity() {
              }
         } else {
             // if last char is not operation, we can add new char
-            if (resultField.text.takeLast(1) in numValues ||
+            if ((resultField.text.takeLast(1) in numValues && btnVal !in "(") ||
                 ((resultField.text.takeLast(1) in pointValue) &&
-                        (btnVal in numValues)) &&
-                (btnVal !in "(")
+                        (btnVal in numValues))
             ) {
                 resString += btnVal.toString()
             }
