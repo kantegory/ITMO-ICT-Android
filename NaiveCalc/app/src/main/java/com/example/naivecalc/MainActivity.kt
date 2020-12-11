@@ -86,15 +86,14 @@ class MainActivity : AppCompatActivity() {
                 resString += btnVal.toString()
             }
 
-            // if last char is right bracket, we can add only operation
+            // if last char is right bracket, we can add only an operation
             else if (resultField.text.takeLast(1) in ")" && btnVal in opValues) {
                 resString += btnVal.toString()
             }
 
             // if we have an even number of left brackets, we can add right bracket
             else if (btnVal in ")" &&
-                (countBrackets(resultField.text.toString(), "(") % 2 != 0 &&
-                    countBrackets(resultField.text.toString(), ")") + 1 <
+                (countBrackets(resultField.text.toString(), ")") + 1 <=
                     countBrackets(resultField.text.toString(), "(")
                 ) && resultField.text.takeLast(1) !in "(") {
                 resString += btnVal.toString()
