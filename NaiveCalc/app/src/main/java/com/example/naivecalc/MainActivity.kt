@@ -1,7 +1,6 @@
 package com.example.naivecalc
 
 import android.R.attr.label
-import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -12,6 +11,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import org.mariuszgromada.math.mxparser.Expression
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,86 +104,23 @@ class MainActivity : AppCompatActivity() {
         resultField.text = resString
     }
 
+    private fun prepareExpression(expression: String) : String {
+        return expression.replace("×", "*")
+    }
+
     fun showRes(view: View) {
         // get result field
         val resultField = findViewById<TextView>(R.id.result)
-        var tempString = ""
-        val numArray: MutableList<Double> = ArrayList()
-        val opArray: MutableList<String> = ArrayList()
 
-        // define numValues and opValues
-        val numValues = ".0123456789"
-        val opValues = "×/-+"
+        // prepare expression
+        val expression = prepareExpression(resultField.text.toString())
 
-        // if last char is operation we shouldn't calc
-        if (resultField.text.takeLast(1) in opValues) {
-            return
-        }
+        // parse expression
+        val result = Expression(expression)
 
-        resultField.text.forEach {
-            run {
-                // if it's number we should save it to tempString
-                if (it in numValues) {
-                    tempString += it
-                }
-                else if (it in opValues) {
-                    // add curr tempString double number to numArray
-                    numArray.add(tempString.toDouble())
-
-                    // clear tempString
-                    tempString = ""
-
-                    // add opValue to opArray
-                    opArray.add(it.toString())
-                }
-            }
-        }
-
-        // get the last number from resultField
-        var lastNum = resultField.text.split("+").takeLast(1)[0]
-        lastNum = lastNum.split("-").takeLast(1)[0]
-        lastNum = lastNum.split("/").takeLast(1)[0]
-        lastNum = lastNum.split("×").takeLast(1)[0]
-
-        numArray.add(lastNum.toDouble())
-
-        // update result field
-        resultField.text = calc(numArray, opArray)
+        // calculate expression and put result to result field
+        resultField.text = result.calculate().toString()
     }
-
-     private fun calc(numArray: MutableList<Double>, opArray: MutableList<String>): String {
-         var result = 0.0
-         var tempNum = 0.0
-
-         numArray.forEachIndexed { Index, Num ->
-             run {
-                 if (Index < 1) {
-                     result = Num
-                 } else {
-                     when {
-                         opArray[Index - 1] == "+" -> {
-                             tempNum = Num
-                             result += tempNum
-                         }
-                         opArray[Index - 1] == "-" -> {
-                             tempNum = Num
-                             result -= tempNum
-                         }
-                         opArray[Index - 1] == "×" -> {
-                             tempNum = Num
-                             result *= tempNum
-                         }
-                         opArray[Index - 1] == "/" -> {
-                             tempNum = Num
-                             result /= tempNum
-                         }
-                     }
-                 }
-             }
-         }
-
-         return result.toString()
-     }
 
     fun clearResField(view: View) {
         // get result field, then clear
