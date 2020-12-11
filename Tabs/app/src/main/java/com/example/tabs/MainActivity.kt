@@ -15,8 +15,23 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, FragmentHome())
+            .replace(R.id.fragment_container, FragmentHome(), FragmentHome().tag)
+            .addToBackStack(FragmentHome().tag)
             .commit()
+
+        supportFragmentManager
+            .addOnBackStackChangedListener {
+                val fragment = supportFragmentManager.getBackStackEntryAt(
+                    supportFragmentManager.backStackEntryCount - 1
+                ).name
+
+                val fragmentId = supportFragmentManager.findFragmentByTag(fragment)
+
+                if (fragmentId != null) {
+                    // отмечаем, как выбранную
+                    bottomNav.selectedItemId = fragmentId.id
+                }
+            }
 
         bottomNav.setOnNavigationItemSelectedListener {
             val selectedFragment : Fragment = when (it.itemId) {
@@ -36,11 +51,11 @@ class MainActivity : AppCompatActivity() {
 
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, selectedFragment)
+                .replace(R.id.fragment_container, selectedFragment, selectedFragment.tag)
+                .addToBackStack(selectedFragment.tag)
                 .commit()
 
             true
         }
     }
-
 }

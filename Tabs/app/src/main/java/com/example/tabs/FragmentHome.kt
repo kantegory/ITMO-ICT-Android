@@ -14,10 +14,6 @@ class FragmentHome : Fragment() {
         }
     }
 
-//    private val CURRENT_FRAGMENT_TAG = "current_fragment_tag"
-//    private var mCurrentFragmentTag: String? = null // Tag for current fragment instance
-//    private val FRAGMENT_TAG_SEPERATOR = ":"
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
 
@@ -28,7 +24,7 @@ class FragmentHome : Fragment() {
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         // сохраняем стейт
-        savedInstanceState.putString("result", homeInc.text.toString())
+        savedInstanceState.putString(FragmentHome().tag, homeInc.text.toString())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,16 +44,9 @@ class FragmentHome : Fragment() {
 
         // восстанавливаем данные из стейта
         if (savedInstanceState != null) {
-            println("SAVING FUCKING STATE")
-            homeInc.text = savedInstanceState.getString("result")
+            homeInc.text = savedInstanceState.getString(FragmentHome().tag)
         }
 
     }
 
-//    fun getFragmentTag(): String? {
-//        if (mCurrentFragmentTag == null) {
-//            mCurrentFragmentTag = this.javaClass.simpleName + FRAGMENT_TAG_SEPERATOR + this.hashCode()
-//        }
-//        return mCurrentFragmentTag
-//    }
 }
