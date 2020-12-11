@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import org.mariuszgromada.math.mxparser.Expression
 
 
@@ -50,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         val natValues = "123456789"
         val zeroValue = "0"
         val opValues = "×/-+"
-        val bracketValues = "()"
         val pointValue = "."
 
         // logic is there
@@ -109,8 +109,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showRes(view: View) {
+        // define operation values
+        val opValues = "×/-+"
+        val pointValue = "."
+
         // get result field
         val resultField = findViewById<TextView>(R.id.result)
+
+        // count left brackets
+        val leftBrackets = countBrackets(resultField.text.toString(), "(")
+
+        // count right brackets
+        val rightBrackets = countBrackets(resultField.text.toString(), ")")
 
         // prepare expression
         val expression = prepareExpression(resultField.text.toString())
@@ -118,8 +128,14 @@ class MainActivity : AppCompatActivity() {
         // parse expression
         val result = Expression(expression)
 
-        // calculate expression and put result to result field
-        resultField.text = result.calculate().toString()
+        // if count of left brackets lower than count of right brackets,
+        // we shouldn't show the expression
+        if (leftBrackets == rightBrackets &&
+            resultField.text.takeLast(1) !in opValues &&
+                resultField.text.takeLast(1) !in pointValue) {
+            // calculate expression and put result to result field
+            resultField.text = result.calculate().toString()
+        }
     }
 
     fun clearResField(view: View) {
