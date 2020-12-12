@@ -132,8 +132,13 @@ class MainActivity : AppCompatActivity() {
         if (leftBrackets == rightBrackets &&
             resultField.text.takeLast(1) !in opValues &&
                 resultField.text.takeLast(1) !in pointValue) {
-            // calculate expression and put result to result field
-            resultField.text = result.calculate().toString()
+                    val answer = result.calculate().toString()
+            if (answer != "NaN") {
+                // calculate expression and put result to result field
+                resultField.text = answer
+            } else {
+                resultField.text = "Некорректно"
+            }
         }
     }
 
