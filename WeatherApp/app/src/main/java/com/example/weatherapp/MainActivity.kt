@@ -81,11 +81,7 @@ class MainActivity : AppCompatActivity() {
 
                 for (FBDItem in weatherResponse.daily) {
                     val forecastDailyIcon = FBDItem.weather[0].icon
-
-                    val icon = Picasso.get()
-                        .load("https://openweathermap.org/img/wn/$forecastDailyIcon@2x.png")
-                        .fit()
-                        .centerCrop()
+                    val forecastDailyTemp = "${FBDItem.temp.day.roundToInt()}°C"
 
                     val sdf = SimpleDateFormat("dd.MM")
                     val currDayNameNow = Date(FBDItem.dt.toLong() * 1000)
@@ -93,8 +89,9 @@ class MainActivity : AppCompatActivity() {
 
                     FBDList += FBD(
                         formattedDate,
-                        "${FBDItem.temp.day.roundToInt()}°C",
-                        R.drawable.cloud)
+                        forecastDailyTemp,
+                        forecastDailyIcon)
+
                     Log.d("FBD", FBDList.toString())
                 }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 
 class FBDAdapter (private val FBDNumber: Int, private val FBDList: List<FBD>)
     : RecyclerView.Adapter<FBDAdapter.FBDViewHolder>()  {
@@ -16,10 +17,17 @@ class FBDAdapter (private val FBDNumber: Int, private val FBDList: List<FBD>)
         private val FBDTemp : TextView = itemView.findViewById(R.id.forecastBDTemp)
         private val FBDImg : ImageView = itemView.findViewById(R.id.forecastBDImg)
 
+
         fun bind(index: Int, list: List<FBD>) {
-            FBDImg.setImageResource(list[index].img)
+            // FBDImg.setImageResource(list[index].img)
             FBDTemp.text = list[index].temp
             FBDTime.text = list[index].day
+
+            val currIcon = Picasso.get()
+                .load("https://openweathermap.org/img/wn/${list[index].img}@2x.png")
+                .fit()
+                .centerCrop()
+                .into(FBDImg)
         }
     }
 
