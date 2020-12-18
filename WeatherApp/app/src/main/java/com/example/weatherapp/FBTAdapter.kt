@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 
 class FBTAdapter (private val FBTNumber: Int, private val FBTList: List<FBT>)
     : RecyclerView.Adapter<FBTAdapter.FBTViewHolder>()  {
@@ -17,9 +18,15 @@ class FBTAdapter (private val FBTNumber: Int, private val FBTList: List<FBT>)
             private val FBTImg : ImageView = itemView.findViewById(R.id.forecastBTImg)
 
             fun bind(index: Int, list: List<FBT>) {
-                FBTImg.setImageResource(list[index].img)
+                // FBTImg.setImageResource(list[index].img)
                 FBTTemp.text = list[index].temp
                 FBTTime.text = list[index].time
+
+                val currIcon = Picasso.get()
+                    .load("https://openweathermap.org/img/wn/${list[index].img}@2x.png")
+                    .fit()
+                    .centerCrop()
+                    .into(FBTImg)
             }
         }
 

@@ -5,7 +5,8 @@ import com.squareup.moshi.Json
 class WeatherResponse(
     @field:Json(name = "timezone") var timezone: String,
     @field:Json(name = "current") var current: Current,
-    @field:Json(name = "daily") var daily: List<Daily>
+    @field:Json(name = "daily") var daily: List<Daily>,
+    @field:Json(name = "hourly") var hourly: List<Hourly>
 )
 
 class Current(
@@ -17,6 +18,12 @@ class Current(
 class Daily(
     @field:Json(name = "dt") var dt: String,
     @field:Json(name = "temp") var temp: Temp,
+    @field:Json(name = "weather") var weather: List<WeatherDescription>
+)
+
+class Hourly(
+    @field:Json(name = "dt") var dt: String,
+    @field:Json(name = "temp") var temp: Float,
     @field:Json(name = "weather") var weather: List<WeatherDescription>
 )
 

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     interface OpenWeatherMapService {
-        @GET("onecall?lat=59.937500&lon=30.308611&exclude=minutely,hourly,alerts&units=metric&appid=508af3c89d5fdcb4b9f030cea26e964e")
+        @GET("onecall?lat=59.937500&lon=30.308611&exclude=minutely,alerts&units=metric&appid=508af3c89d5fdcb4b9f030cea26e964e")
         fun listWeather(): Call<WeatherResponse>
     }
 
@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
                 call: Call<WeatherResponse>,
                 response: Response<WeatherResponse>
             ) {
+                Log.d("RESPONSE", response.toString())
+
                 val weatherResponse = response.body()!!
 
                 val weatherTemp = weatherResponse.current.temp.roundToInt()
@@ -79,6 +81,24 @@ class MainActivity : AppCompatActivity() {
                     .centerCrop()
                     .into(forecastNowImg)
 
+                // заполняем прогноз на 48 часов
+                for (FBTItem in weatherResponse.hourly) {
+                    val forecastHourlyIcon = FBTItem.weather[0].icon
+                    val forecastHourlyTemp = "${FBTItem.temp.roundToInt()}°C"
+
+                    val sdf = SimpleDateFormat("hh:mm")
+                    val currTimeNameNow = Date(FBTItem.dt.toLong() * 1000)
+                    val formattedDate = sdf.format(currTimeNameNow)
+
+                    FBTList += FBT(
+                        formattedDate,
+                        forecastHourlyTemp,
+                        forecastHourlyIcon)
+
+                    Log.d("FBT", FBTList.toString())
+                }
+
+                // заполняем прогноз на 7 дней
                 for (FBDItem in weatherResponse.daily) {
                     val forecastDailyIcon = FBDItem.weather[0].icon
                     val forecastDailyTemp = "${FBDItem.temp.day.roundToInt()}°C"
@@ -95,6 +115,17 @@ class MainActivity : AppCompatActivity() {
                     Log.d("FBD", FBDList.toString())
                 }
 
+                // заводим ресайклер для hourly
+                val FBTAdapter = FBTAdapter(FBTList.size, FBTList)
+
+                val FBTlayoutManager = LinearLayoutManager(
+                    applicationContext, LinearLayoutManager.HORIZONTAL, false
+                )
+
+                FBTRecycler.layoutManager = FBTlayoutManager
+                FBTRecycler.adapter = FBTAdapter
+
+                // заводим ресайклер для daily
                 val FBDRecycler: RecyclerView = findViewById(R.id.recyclerViewFBD)
 
                 val FBDAdapter = FBDAdapter(FBDList.size, FBDList)
@@ -108,18 +139,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Log.d("OWS", "API ERROR")
+                Log.d("OWS", t.toString())
             }
         })
-
-        val FBTAdapter = FBTAdapter(FBTList.size, FBTList)
-
-        val FBTlayoutManager = LinearLayoutManager(
-            applicationContext, LinearLayoutManager.HORIZONTAL, false
-        )
-
-        FBTRecycler.layoutManager = FBTlayoutManager
-        FBTRecycler.adapter = FBTAdapter
     }
 
     fun changeTheme (view: View) {
