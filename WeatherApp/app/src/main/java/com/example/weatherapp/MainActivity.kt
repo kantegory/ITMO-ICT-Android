@@ -1,12 +1,14 @@
 package com.example.weatherapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -16,12 +18,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.*
 import java.util.*
+import kotlin.concurrent.thread
 import kotlin.math.roundToInt
+
 
 class MainActivity : AppCompatActivity() {
     companion object{
@@ -47,18 +47,47 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // db.weatherResponseDAO()?.getAll()
+
         val FBTRecycler: RecyclerView = findViewById(R.id.recyclerViewFBT)
 
         // заведём пустые листы, выполним запрос, чтобы их заполнить
         val FBTList : MutableList<FBT> = mutableListOf()
         val FBDList : MutableList<FBD> = mutableListOf()
 
-        call?.enqueue(object: Callback<WeatherResponse> {
+        var weatherResponseData : WeatherResponseRoom
+
+        call?.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(
                 call: Call<WeatherResponse>,
                 response: Response<WeatherResponse>
             ) {
                 val weatherResponse = response.body()!!
+
+                // переводим всё в json
+                val moshi = Moshi.Builder().build()
+                val jsonAdapter: JsonAdapter<WeatherResponse> = moshi.adapter<WeatherResponse>(weatherResponse::class.java)
+                val json: String = jsonAdapter.toJson(weatherResponse)
+
+                // записываем значение
+                weatherResponseData = WeatherResponseRoom(
+                    id = 1,
+                    response = json
+                )
+
+                // заводим тред для записи данных в бд
+                thread {
+                    val db = Room.databaseBuilder(
+                        applicationContext,
+                        AppDatabase::class.java, "appDB"
+                    ).build()
+
+                    // очищаем все прошлые данные
+                    db.weatherResponseDAO()?.deleteAll()
+
+                    // записываем новые
+                    db.weatherResponseDAO()?.insert(weatherResponseData)
+                }
 
                 val weatherTemp = weatherResponse.current.temp.roundToInt()
 
@@ -92,7 +121,8 @@ class MainActivity : AppCompatActivity() {
                     FBTList += FBT(
                         formattedDate,
                         forecastHourlyTemp,
-                        forecastHourlyIcon)
+                        forecastHourlyIcon
+                    )
 
                     Log.d("FBT", FBTList.toString())
                 }
@@ -109,7 +139,8 @@ class MainActivity : AppCompatActivity() {
                     FBDList += FBD(
                         formattedDate,
                         forecastDailyTemp,
-                        forecastDailyIcon)
+                        forecastDailyIcon
+                    )
 
                     Log.d("FBD", FBDList.toString())
                 }
@@ -141,9 +172,10 @@ class MainActivity : AppCompatActivity() {
                 Log.d("OWS", t.toString())
             }
         })
+
     }
 
-    fun changeTheme (view: View) {
+    fun changeTheme(view: View) {
         setTheme(R.style.BlackTheme)
     }
 

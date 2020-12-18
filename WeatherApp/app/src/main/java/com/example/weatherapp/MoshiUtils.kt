@@ -3,7 +3,6 @@ package com.example.weatherapp
 import com.squareup.moshi.Json
 
 class WeatherResponse(
-    @field:Json(name = "timezone") var timezone: String,
     @field:Json(name = "current") var current: Current,
     @field:Json(name = "daily") var daily: List<Daily>,
     @field:Json(name = "hourly") var hourly: List<Hourly>
