@@ -55,8 +55,117 @@ class MainActivity : AppCompatActivity() {
         val FBTList : MutableList<FBT> = mutableListOf()
         val FBDList : MutableList<FBD> = mutableListOf()
 
-        var weatherResponseData : WeatherResponseRoom
+        fun showAllWeather(weatherResponse: WeatherResponse) {
+            val weatherTemp = weatherResponse.current.temp.roundToInt()
 
+            // приводим значение температуры к необходимому виду
+            // и выводим её
+            val tempNow = "${weatherTemp}°C"
+            forecastNowTemp.text = tempNow
+
+            forecastNowHumValue.text = weatherResponse.current.humidity.toString()
+
+            val forecastNowIcon = weatherResponse.current.weather.first().icon
+
+            Log.d("FORECAST NOW", weatherResponse.current.weather.size.toString())
+
+            // получаем картинку для текущего прогноза
+            Picasso.get()
+                .load("https://openweathermap.org/img/wn/$forecastNowIcon@2x.png")
+                .fit()
+                .centerCrop()
+                .into(forecastNowImg)
+
+            // заполняем прогноз на 48 часов
+            for (FBTItem in weatherResponse.hourly) {
+                val forecastHourlyIcon = FBTItem.weather[0].icon
+                val forecastHourlyTemp = "${FBTItem.temp.roundToInt()}°C"
+
+                val sdf = SimpleDateFormat("hh:mm")
+                val currTimeNameNow = Date(FBTItem.dt.toLong() * 1000)
+                val formattedDate = sdf.format(currTimeNameNow)
+
+                FBTList += FBT(
+                    formattedDate,
+                    forecastHourlyTemp,
+                    forecastHourlyIcon
+                )
+
+                Log.d("FBT", FBTList.toString())
+            }
+
+            // заполняем прогноз на 7 дней
+            for (FBDItem in weatherResponse.daily) {
+                val forecastDailyIcon = FBDItem.weather[0].icon
+                val forecastDailyTemp = "${FBDItem.temp.day.roundToInt()}°C"
+
+                val sdf = SimpleDateFormat("dd.MM")
+                val currDayNameNow = Date(FBDItem.dt.toLong() * 1000)
+                val formattedDate = sdf.format(currDayNameNow)
+
+                FBDList += FBD(
+                    formattedDate,
+                    forecastDailyTemp,
+                    forecastDailyIcon
+                )
+
+                Log.d("FBD", FBDList.toString())
+            }
+
+            // заводим ресайклер для hourly
+            val FBTAdapter = FBTAdapter(FBTList.size, FBTList)
+
+            val FBTlayoutManager = LinearLayoutManager(
+                applicationContext, LinearLayoutManager.HORIZONTAL, false
+            )
+
+            FBTRecycler.layoutManager = FBTlayoutManager
+            FBTRecycler.adapter = FBTAdapter
+
+            // заводим ресайклер для daily
+            val FBDRecycler: RecyclerView = findViewById(R.id.recyclerViewFBD)
+
+            val FBDAdapter = FBDAdapter(FBDList.size, FBDList)
+
+            val FBDlayoutManager = LinearLayoutManager(
+                applicationContext
+            )
+
+            FBDRecycler.layoutManager = FBDlayoutManager
+            FBDRecycler.adapter = FBDAdapter
+        }
+
+        fun loadDataFromDB () {
+            thread {
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    AppDatabase::class.java, "appDB"
+                ).build()
+
+                val weatherDataFromDB = db.weatherResponseDAO().getAll()
+                //            Log.d("WEATHER DATA", weatherData)
+
+                val weatherData: String
+
+                if (weatherDataFromDB.isNotEmpty()) {
+                    weatherData = weatherDataFromDB.first().response
+
+                    val moshi = Moshi.Builder().build()
+                    val jsonAdapter: JsonAdapter<WeatherResponse> =
+                        moshi.adapter<WeatherResponse>(WeatherResponse::class.java)
+                    val weatherResponse: WeatherResponse = jsonAdapter.fromJson(weatherData)!!
+
+                    runOnUiThread {
+                        showAllWeather(weatherResponse)
+                    }
+                }
+            }
+        }
+
+        // подгрузим все данные из бд
+        loadDataFromDB()
+
+        // начинаем запрос
         call?.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(
                 call: Call<WeatherResponse>,
@@ -70,7 +179,7 @@ class MainActivity : AppCompatActivity() {
                 val json: String = jsonAdapter.toJson(weatherResponse)
 
                 // записываем значение
-                weatherResponseData = WeatherResponseRoom(
+                val weatherResponseData = WeatherResponseRoom(
                     id = 1,
                     response = json
                 )
@@ -87,6 +196,9 @@ class MainActivity : AppCompatActivity() {
 
                     // записываем новые
                     db.weatherResponseDAO().insert(weatherResponseData)
+
+                    // получаем только что записанные
+                    loadDataFromDB()
                 }
             }
 
@@ -94,101 +206,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d("OWS Error", t.toString())
             }
         })
-
-        thread {
-            val db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "appDB"
-            ).build()
-
-            val weatherData = db.weatherResponseDAO().getAll().first().response
-            Log.d("WEATHER DATA", weatherData)
-
-            runOnUiThread {
-                val moshi = Moshi.Builder().build()
-                val jsonAdapter: JsonAdapter<WeatherResponse> =
-                    moshi.adapter<WeatherResponse>(WeatherResponse::class.java)
-                val weatherResponse: WeatherResponse = jsonAdapter.fromJson(weatherData)!!
-
-                val weatherTemp = weatherResponse.current.temp.roundToInt()
-
-                // приводим значение температуры к необходимому виду
-                // и выводим её
-                val tempNow = "${weatherTemp}°C"
-                forecastNowTemp.text = tempNow
-
-                forecastNowHumValue.text = weatherResponse.current.humidity.toString()
-
-                val forecastNowIcon = weatherResponse.current.weather.first().icon
-
-                Log.d("FORECAST NOW", weatherResponse.current.weather.size.toString())
-
-                // получаем картинку для текущего прогноза
-                Picasso.get()
-                    .load("https://openweathermap.org/img/wn/$forecastNowIcon@2x.png")
-                    .fit()
-                    .centerCrop()
-                    .into(forecastNowImg)
-
-                // заполняем прогноз на 48 часов
-                for (FBTItem in weatherResponse.hourly) {
-                    val forecastHourlyIcon = FBTItem.weather[0].icon
-                    val forecastHourlyTemp = "${FBTItem.temp.roundToInt()}°C"
-
-                    val sdf = SimpleDateFormat("hh:mm")
-                    val currTimeNameNow = Date(FBTItem.dt.toLong() * 1000)
-                    val formattedDate = sdf.format(currTimeNameNow)
-
-                    FBTList += FBT(
-                        formattedDate,
-                        forecastHourlyTemp,
-                        forecastHourlyIcon
-                    )
-
-                    Log.d("FBT", FBTList.toString())
-                }
-
-                // заполняем прогноз на 7 дней
-                for (FBDItem in weatherResponse.daily) {
-                    val forecastDailyIcon = FBDItem.weather[0].icon
-                    val forecastDailyTemp = "${FBDItem.temp.day.roundToInt()}°C"
-
-                    val sdf = SimpleDateFormat("dd.MM")
-                    val currDayNameNow = Date(FBDItem.dt.toLong() * 1000)
-                    val formattedDate = sdf.format(currDayNameNow)
-
-                    FBDList += FBD(
-                        formattedDate,
-                        forecastDailyTemp,
-                        forecastDailyIcon
-                    )
-
-                    Log.d("FBD", FBDList.toString())
-                }
-
-                // заводим ресайклер для hourly
-                val FBTAdapter = FBTAdapter(FBTList.size, FBTList)
-
-                val FBTlayoutManager = LinearLayoutManager(
-                    applicationContext, LinearLayoutManager.HORIZONTAL, false
-                )
-
-                FBTRecycler.layoutManager = FBTlayoutManager
-                FBTRecycler.adapter = FBTAdapter
-
-                // заводим ресайклер для daily
-                val FBDRecycler: RecyclerView = findViewById(R.id.recyclerViewFBD)
-
-                val FBDAdapter = FBDAdapter(FBDList.size, FBDList)
-
-                val FBDlayoutManager = LinearLayoutManager(
-                    applicationContext
-                )
-
-                FBDRecycler.layoutManager = FBDlayoutManager
-                FBDRecycler.adapter = FBDAdapter
-            }
-        }
     }
 
     fun changeTheme(view: View) {
