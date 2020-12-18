@@ -26,10 +26,11 @@ import kotlin.math.roundToInt
 class MainActivity : AppCompatActivity() {
     companion object{
         const val URL = "https://api.openweathermap.org/data/2.5/"
+        const val apiKey = BuildConfig.OWMKey
     }
 
     interface OpenWeatherMapService {
-        @GET("onecall?lat=59.937500&lon=30.308611&exclude=minutely,alerts&units=metric&appid=508af3c89d5fdcb4b9f030cea26e964e")
+        @GET("onecall?lat=59.937500&lon=30.308611&exclude=minutely,alerts&units=metric&appid=${apiKey}")
         fun listWeather(): Call<WeatherResponse>
     }
 
@@ -57,8 +58,6 @@ class MainActivity : AppCompatActivity() {
                 call: Call<WeatherResponse>,
                 response: Response<WeatherResponse>
             ) {
-                Log.d("RESPONSE", response.toString())
-
                 val weatherResponse = response.body()!!
 
                 val weatherTemp = weatherResponse.current.temp.roundToInt()
