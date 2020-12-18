@@ -15,6 +15,7 @@ class Current(
 )
 
 class Daily(
+    @field:Json(name = "dt") var dt: String,
     @field:Json(name = "temp") var temp: Temp,
     @field:Json(name = "weather") var weather: List<WeatherDescription>
 )

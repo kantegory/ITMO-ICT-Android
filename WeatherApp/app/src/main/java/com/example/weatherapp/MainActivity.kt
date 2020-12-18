@@ -2,11 +2,26 @@ package com.example.weatherapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.*
+import java.util.*
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     companion object{
@@ -18,56 +33,105 @@ class MainActivity : AppCompatActivity() {
         fun listWeather(): Call<WeatherResponse>
     }
 
+    private val retrofit =
+        Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+
+    private val service = retrofit.create(OpenWeatherMapService::class.java)
+    private var call: Call<WeatherResponse>? = service.listWeather()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val FBTRecycler: RecyclerView = findViewById(R.id.recyclerViewFBT)
 
-        // значения заглушек
-        val FBTList : List<FBT> = listOf(
-            FBT("12:00", "2℃", R.drawable.cloud),
-            FBT("14:00", "5℃", R.drawable.sun),
-            FBT("16:00", "0℃", R.drawable.snow),
-            FBT("18:00", "0℃", R.drawable.snow),
-            FBT("20:00", "3℃", R.drawable.cloud),
-            FBT("22:00", "1℃", R.drawable.snow),
-            FBT("00:00", "4℃", R.drawable.snow)
-        )
+        // заведём пустые листы, выполним запрос, чтобы их заполнить
+        val FBTList : MutableList<FBT> = mutableListOf()
+        val FBDList : MutableList<FBD> = mutableListOf()
+
+        call?.enqueue(object: Callback<WeatherResponse> {
+            override fun onResponse(
+                call: Call<WeatherResponse>,
+                response: Response<WeatherResponse>
+            ) {
+                val weatherResponse = response.body()!!
+
+                val weatherTemp = weatherResponse.current.temp.roundToInt()
+
+                // приводим значение температуры к необходимому виду
+                // и выводим её
+                val tempNow = "${weatherTemp}°C"
+                forecastNowTemp.text = tempNow
+
+                forecastNowHumValue.text = weatherResponse.current.humidity.toString()
+
+                val forecastNowIcon = weatherResponse.current.weather.first().icon
+
+                Log.d("FORECAST NOW", weatherResponse.current.weather.size.toString())
+
+                // получаем картинку для текущего прогноза
+                Picasso.get()
+                    .load("https://openweathermap.org/img/wn/$forecastNowIcon@2x.png")
+                    .fit()
+                    .centerCrop()
+                    .into(forecastNowImg)
+
+                for (FBDItem in weatherResponse.daily) {
+                    val forecastDailyIcon = FBDItem.weather[0].icon
+
+                    val icon = Picasso.get()
+                        .load("https://openweathermap.org/img/wn/$forecastDailyIcon@2x.png")
+                        .fit()
+                        .centerCrop()
+
+                    val sdf = SimpleDateFormat("dd.MM")
+                    val currDayNameNow = Date(FBDItem.dt.toLong() * 1000)
+                    val formattedDate = sdf.format(currDayNameNow)
+
+                    FBDList += FBD(
+                        formattedDate,
+                        "${FBDItem.temp.day.roundToInt()}°C",
+                        R.drawable.cloud)
+                    Log.d("FBD", FBDList.toString())
+                }
+
+                val FBDRecycler: RecyclerView = findViewById(R.id.recyclerViewFBD)
+
+                val FBDAdapter = FBDAdapter(FBDList.size, FBDList)
+
+                val FBDlayoutManager = LinearLayoutManager(
+                    applicationContext
+                )
+
+                FBDRecycler.layoutManager = FBDlayoutManager
+                FBDRecycler.adapter = FBDAdapter
+            }
+
+            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                Log.d("OWS", "API ERROR")
+            }
+        })
 
         val FBTAdapter = FBTAdapter(FBTList.size, FBTList)
 
         val FBTlayoutManager = LinearLayoutManager(
-            this, LinearLayoutManager.HORIZONTAL, false
+            applicationContext, LinearLayoutManager.HORIZONTAL, false
         )
 
         FBTRecycler.layoutManager = FBTlayoutManager
         FBTRecycler.adapter = FBTAdapter
-
-        val FBDRecycler: RecyclerView = findViewById(R.id.recyclerViewFBD)
-
-        // значения заглушек
-        val FBDList : List<FBD> = listOf(
-            FBD("12, Дек", "2℃", R.drawable.cloud),
-            FBD("13, Дек", "5℃", R.drawable.sun),
-            FBD("14, Дек", "0℃", R.drawable.snow),
-            FBD("15, Дек", "0℃", R.drawable.snow),
-            FBD("16, Дек", "3℃", R.drawable.cloud),
-            FBD("17, Дек", "1℃", R.drawable.snow),
-            FBD("18, Дек", "4℃", R.drawable.snow)
-        )
-
-        val FBDAdapter = FBDAdapter(FBDList.size, FBDList)
-
-        val FBDlayoutManager = LinearLayoutManager(
-            this
-        )
-
-        FBDRecycler.layoutManager = FBDlayoutManager
-        FBDRecycler.adapter = FBDAdapter
     }
 
     fun changeTheme (view: View) {
         setTheme(R.style.BlackTheme)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        call?.cancel()
+        call = null
     }
 }
