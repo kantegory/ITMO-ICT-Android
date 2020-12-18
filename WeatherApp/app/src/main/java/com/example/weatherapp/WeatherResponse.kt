@@ -24,5 +24,5 @@ interface WeatherResponseDAO {
 
 @Database(entities = [WeatherResponseRoom::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun weatherResponseDAO(): WeatherResponseDAO?
+    abstract fun weatherResponseDAO(): WeatherResponseDAO
 }

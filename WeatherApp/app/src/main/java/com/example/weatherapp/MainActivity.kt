@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.google.gson.JsonObject
 import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
 import com.squareup.moshi.Moshi
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,8 +49,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // db.weatherResponseDAO()?.getAll()
-
         val FBTRecycler: RecyclerView = findViewById(R.id.recyclerViewFBT)
 
         // заведём пустые листы, выполним запрос, чтобы их заполнить
@@ -83,11 +83,32 @@ class MainActivity : AppCompatActivity() {
                     ).build()
 
                     // очищаем все прошлые данные
-                    db.weatherResponseDAO()?.deleteAll()
+                    db.weatherResponseDAO().deleteAll()
 
                     // записываем новые
-                    db.weatherResponseDAO()?.insert(weatherResponseData)
+                    db.weatherResponseDAO().insert(weatherResponseData)
                 }
+            }
+
+            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                Log.d("OWS Error", t.toString())
+            }
+        })
+
+        thread {
+            val db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java, "appDB"
+            ).build()
+
+            val weatherData = db.weatherResponseDAO().getAll().first().response
+            Log.d("WEATHER DATA", weatherData)
+
+            runOnUiThread {
+                val moshi = Moshi.Builder().build()
+                val jsonAdapter: JsonAdapter<WeatherResponse> =
+                    moshi.adapter<WeatherResponse>(WeatherResponse::class.java)
+                val weatherResponse: WeatherResponse = jsonAdapter.fromJson(weatherData)!!
 
                 val weatherTemp = weatherResponse.current.temp.roundToInt()
 
@@ -167,12 +188,7 @@ class MainActivity : AppCompatActivity() {
                 FBDRecycler.layoutManager = FBDlayoutManager
                 FBDRecycler.adapter = FBDAdapter
             }
-
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Log.d("OWS", t.toString())
-            }
-        })
-
+        }
     }
 
     fun changeTheme(view: View) {
