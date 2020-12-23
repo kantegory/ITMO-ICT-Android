@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="statsFragment"
+    android:background="#353535"
     android:id="@+id/statsWrapper">
 
     <TextView
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/_1"
         android:textSize="30sp"
-        android:textColor="@color/black"
+        android:textColor="#fff"
         android:layout_centerInParent="true"
         android:id="@+id/statsInc"
         />

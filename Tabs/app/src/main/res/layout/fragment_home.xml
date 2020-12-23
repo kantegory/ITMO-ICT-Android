@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="homeFragment"
+    android:background="@color/teal_700"
     android:id="@+id/homeWrapper">
 
     <TextView
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/_1"
         android:textSize="30sp"
-        android:textColor="@color/teal_700"
+        android:textColor="#fff"
         android:layout_centerInParent="true"
         android:id="@+id/homeInc"
         />

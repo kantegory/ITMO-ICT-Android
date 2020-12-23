@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:tag="favFragment"
     android:layout_height="match_parent"
+    android:background="@color/purple_700"
     android:id="@+id/favWrapper">
 
     <TextView
@@ -12,7 +13,7 @@
         android:text="@string/_1"
         android:textSize="30sp"
         android:id="@+id/favInc"
-        android:textColor="@color/purple_700"
+        android:textColor="#fff"
         android:layout_centerInParent="true"
         />
 </RelativeLayout>
