@@ -7,9 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.google.gson.JsonObject
 import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.JsonReader
 import com.squareup.moshi.Moshi
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,16 +22,10 @@ import java.util.*
 import kotlin.concurrent.thread
 import kotlin.math.roundToInt
 
-
 class MainActivity : AppCompatActivity() {
     companion object{
         const val URL = "https://api.openweathermap.org/data/2.5/"
         const val apiKey = BuildConfig.OWMKey
-    }
-
-    interface OpenWeatherMapService {
-        @GET("onecall?lat=59.937500&lon=30.308611&exclude=minutely,alerts&units=metric&appid=${apiKey}")
-        fun listWeather(): Call<WeatherResponse>
     }
 
     private val retrofit =
@@ -42,8 +34,13 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
 
+    interface OpenWeatherMapService {
+        @GET("onecall?lat=59.937500&lon=30.308611&exclude=minutely,alerts&units=metric&appid=${apiKey}")
+        fun getWeather(): Call<WeatherResponse>
+    }
+
     private val service = retrofit.create(OpenWeatherMapService::class.java)
-    private var call: Call<WeatherResponse>? = service.listWeather()
+    private var call: Call<WeatherResponse>? = service.getWeather()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
