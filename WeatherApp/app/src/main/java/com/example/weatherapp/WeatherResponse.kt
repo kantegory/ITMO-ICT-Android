@@ -1,6 +1,7 @@
 package com.example.weatherapp
 
 import androidx.room.*
+import io.reactivex.Maybe
 
 @Entity(tableName = "weather_response")
 class WeatherResponseRoom(
@@ -13,7 +14,7 @@ class WeatherResponseRoom(
 @Dao
 interface WeatherResponseDAO {
     @Query("SELECT * FROM weather_response")
-    fun getAll(): List<WeatherResponseRoom>
+    fun getAll(): Maybe<WeatherResponseRoom>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(weatherResponse: WeatherResponseRoom)

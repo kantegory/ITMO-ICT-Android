@@ -10,6 +10,9 @@ import androidx.room.Room
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.picasso.Picasso
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableMaybeObserver
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -132,35 +135,39 @@ class MainActivity : AppCompatActivity() {
             FBDRecycler.adapter = FBDAdapter
         }
 
-        fun loadDataFromDB () {
-            thread {
-                val db = Room.databaseBuilder(
-                    applicationContext,
-                    AppDatabase::class.java, "appDB"
-                ).build()
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "appDB"
+        ).build()
 
-                val weatherDataFromDB = db.weatherResponseDAO().getAll()
-                //            Log.d("WEATHER DATA", weatherData)
+        db.weatherResponseDAO().getAll()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object: DisposableMaybeObserver<WeatherResponseRoom?>() {
+                override fun onSuccess(response: WeatherResponseRoom) {
+                    // достаём данные
+                    val weatherData = response.response
 
-                val weatherData: String
-
-                if (weatherDataFromDB.isNotEmpty()) {
-                    weatherData = weatherDataFromDB.first().response
-
+                    // десериализуем
                     val moshi = Moshi.Builder().build()
                     val jsonAdapter: JsonAdapter<WeatherResponse> =
                         moshi.adapter<WeatherResponse>(WeatherResponse::class.java)
                     val weatherResponse: WeatherResponse = jsonAdapter.fromJson(weatherData)!!
-
-                    runOnUiThread {
-                        showAllWeather(weatherResponse)
-                    }
+                    // показываем погоду
+                    showAllWeather(weatherResponse)
                 }
-            }
-        }
 
-        // подгрузим все данные из бд
-        loadDataFromDB()
+                override fun onError(e: Throwable) {
+                    // выводим ошибку
+                    Log.d("ERROR IN OBSERVER", e.toString())
+                }
+
+                override fun onComplete() {
+                    // ...
+                    Log.d("COMPLETE IN OBSERVER", "COMPLETED")
+
+                }
+            })
 
         // начинаем запрос
         call?.enqueue(object : Callback<WeatherResponse> {
@@ -172,7 +179,9 @@ class MainActivity : AppCompatActivity() {
 
                 // переводим всё в json
                 val moshi = Moshi.Builder().build()
-                val jsonAdapter: JsonAdapter<WeatherResponse> = moshi.adapter<WeatherResponse>(weatherResponse::class.java)
+                val jsonAdapter: JsonAdapter<WeatherResponse> = moshi.adapter<WeatherResponse>(
+                    weatherResponse::class.java
+                )
                 val json: String = jsonAdapter.toJson(weatherResponse)
 
                 // записываем значение
@@ -195,7 +204,7 @@ class MainActivity : AppCompatActivity() {
                     db.weatherResponseDAO().insert(weatherResponseData)
 
                     // получаем только что записанные
-                    loadDataFromDB()
+//                    loadDataFromDB()
                 }
             }
 
