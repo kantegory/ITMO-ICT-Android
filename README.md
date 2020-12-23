@@ -7,4 +7,4 @@
 - [Калькулятор](https://github.com/kantegory/ITMO-ICT-Android/blob/master/NaiveCalc)
 - [Приложение для погоды](https://github.com/kantegory/ITMO-ICT-Android/blob/master/WeatherApp)
 - [Контакты](https://github.com/kantegory/ITMO-ICT-Android/blob/master/NavieContacts)
-
+- [Приложение с фрагментами](https://github.com/kantegory/ITMO-ICT-Android/blob/master/Fragments)
