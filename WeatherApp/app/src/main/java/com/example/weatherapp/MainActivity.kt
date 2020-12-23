@@ -165,7 +165,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onComplete() {
                     // ...
                     Log.d("COMPLETE IN OBSERVER", "COMPLETED")
-
                 }
             })
 
@@ -192,19 +191,11 @@ class MainActivity : AppCompatActivity() {
 
                 // заводим тред для записи данных в бд
                 thread {
-                    val db = Room.databaseBuilder(
-                        applicationContext,
-                        AppDatabase::class.java, "appDB"
-                    ).build()
-
                     // очищаем все прошлые данные
                     db.weatherResponseDAO().deleteAll()
 
                     // записываем новые
                     db.weatherResponseDAO().insert(weatherResponseData)
-
-                    // получаем только что записанные
-//                    loadDataFromDB()
                 }
             }
 
