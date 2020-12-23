@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Fragments</string>
+    <string name="home">Home</string>
+    <string name="dictionary">Dictionary</string>
+    <string name="chat">Chat</string>
+    <string name="inc">INC</string>
+    <string name="_0">0</string>
+    <string name="notes">Notes</string>
+    <string name="fav">fav</string>
+</resources>

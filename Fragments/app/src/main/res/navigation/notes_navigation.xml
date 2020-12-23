@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/note_navigation"
+    app:startDestination="@id/notesFragment"
+    tools:ignore="UnusedNavigation">
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.fragments.NotesFragment"
+        android:label="DictionaryFragment"
+        tools:layout="@layout/fragment_notes">
+        <action
+            android:id="@+id/action_notesFragment_self"
+            app:destination="@id/notesFragment"
+            app:enterAnim="@anim/enter_animation"
+            app:exitAnim="@anim/exit_animation"
+            app:popEnterAnim="@anim/pop_enter_animation"
+            app:popExitAnim="@anim/pop_exit_animation" />
+        <argument
+            android:name="increment"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+
+</navigation>

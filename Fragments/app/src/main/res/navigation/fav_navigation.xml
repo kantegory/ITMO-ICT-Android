@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fav_navigation"
+    app:startDestination="@id/favFragment"
+    tools:ignore="UnusedNavigation">
+    <fragment
+        android:id="@+id/favFragment"
+        android:name="com.example.fragments.FavFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_fav">
+        <action
+            android:id="@+id/action_favFragment_self"
+            app:destination="@id/favFragment"
+            app:enterAnim="@anim/enter_animation"
+            app:exitAnim="@anim/exit_animation"
+            app:popEnterAnim="@anim/pop_enter_animation"
+            app:popExitAnim="@anim/pop_exit_animation" />
+        <argument
+            android:name="increment"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+</navigation>
