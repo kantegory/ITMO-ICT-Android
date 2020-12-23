@@ -14,13 +14,13 @@ class WeatherResponseRoom(
 @Dao
 interface WeatherResponseDAO {
     @Query("SELECT * FROM weather_response")
-    fun getAll(): Maybe<WeatherResponseRoom>
+    suspend fun getAll(): Maybe<WeatherResponseRoom>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(weatherResponse: WeatherResponseRoom)
+    suspend fun insert(weatherResponse: WeatherResponseRoom)
 
     @Query("DELETE FROM weather_response")
-    fun deleteAll()
+    suspend fun deleteAll()
 }
 
 @Database(entities = [WeatherResponseRoom::class], version = 1, exportSchema = false)
