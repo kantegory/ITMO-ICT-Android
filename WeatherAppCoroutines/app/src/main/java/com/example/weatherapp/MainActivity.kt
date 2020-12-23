@@ -14,15 +14,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableMaybeObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.concurrent.thread
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
@@ -140,33 +143,13 @@ class MainActivity : AppCompatActivity() {
             AppDatabase::class.java, "appDB"
         ).build()
 
-        db.weatherResponseDAO().getAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object: DisposableMaybeObserver<WeatherResponseRoom?>() {
-                override fun onSuccess(response: WeatherResponseRoom) {
-                    // достаём данные
-                    val weatherData = response.response
+        suspend fun updateDataInDB(weatherResponseData: WeatherResponseRoom) {
+            // очищаем все прошлые данные
+            db.weatherResponseDAO().deleteAll()
 
-                    // десериализуем
-                    val moshi = Moshi.Builder().build()
-                    val jsonAdapter: JsonAdapter<WeatherResponse> =
-                        moshi.adapter<WeatherResponse>(WeatherResponse::class.java)
-                    val weatherResponse: WeatherResponse = jsonAdapter.fromJson(weatherData)!!
-                    // показываем погоду
-                    showAllWeather(weatherResponse)
-                }
-
-                override fun onError(e: Throwable) {
-                    // выводим ошибку
-                    Log.d("ERROR IN OBSERVER", e.toString())
-                }
-
-                override fun onComplete() {
-                    // ...
-                    Log.d("COMPLETE IN OBSERVER", "COMPLETED")
-                }
-            })
+            // записываем новые
+            db.weatherResponseDAO().insert(weatherResponseData)
+        }
 
         // начинаем запрос
         call?.enqueue(object : Callback<WeatherResponse> {
@@ -189,13 +172,9 @@ class MainActivity : AppCompatActivity() {
                     response = json
                 )
 
-                // заводим тред для записи данных в бд
-                thread {
-                    // очищаем все прошлые данные
-                    db.weatherResponseDAO().deleteAll()
-
-                    // записываем новые
-                    db.weatherResponseDAO().insert(weatherResponseData)
+                // запись данных в бд
+                GlobalScope.launch {
+                    updateDataInDB(weatherResponseData)
                 }
             }
 
@@ -203,6 +182,30 @@ class MainActivity : AppCompatActivity() {
                 Log.d("OWS Error", t.toString())
             }
         })
+
+        GlobalScope.launch {
+            db.weatherResponseDAO().getAll().collect {
+                    data ->
+                        try {
+                            // достаём данные
+                            val weatherData = data.response
+
+                            // десериализуем
+                            val moshi = Moshi.Builder().build()
+                            val jsonAdapter: JsonAdapter<WeatherResponse> =
+                                moshi.adapter<WeatherResponse>(WeatherResponse::class.java)
+                            val weatherResponse: WeatherResponse =
+                                jsonAdapter.fromJson(weatherData)!!
+
+                            // показываем погоду
+                            runOnUiThread {
+                                showAllWeather(weatherResponse)
+                            }
+                        } catch (e: Throwable) {
+                            Log.d("COROUTINE", "FAILED")
+                        }
+            }
+        }
     }
 
     fun changeTheme(view: View) {

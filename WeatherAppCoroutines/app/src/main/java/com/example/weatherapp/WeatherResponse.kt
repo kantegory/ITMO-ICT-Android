@@ -1,7 +1,7 @@
 package com.example.weatherapp
 
 import androidx.room.*
-import io.reactivex.Maybe
+import kotlinx.coroutines.flow.Flow
 
 @Entity(tableName = "weather_response")
 class WeatherResponseRoom(
@@ -14,7 +14,7 @@ class WeatherResponseRoom(
 @Dao
 interface WeatherResponseDAO {
     @Query("SELECT * FROM weather_response")
-    suspend fun getAll(): Maybe<WeatherResponseRoom>
+    fun getAll(): Flow<WeatherResponseRoom>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(weatherResponse: WeatherResponseRoom)
